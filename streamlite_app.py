@@ -1,8 +1,7 @@
 import streamlit as st
 import openai
-import pyttsx3
-
-engine = pyttsx3.init()
+from gtts import gTTS
+import os
 
 def generate(prompt):
     openai.api_key = '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'
@@ -15,17 +14,15 @@ def generate(prompt):
     )
 
     result = response.choices[0].message['content']
-    engine.say(result)
-    engine.runAndWait()
+    tts = gTTS(text=result, lang='en')
+    tts.save("output.mp3")
+    os.system("start output.mp3")  # This will play the audio file
     return result
 
 def clear():
     st.empty()
 
 st.title("ChatBot")
-
-# Load and display the face_img
-face_img = st.image("women_wonder.gif", use_column_width=True)
 
 prompt = st.text_input("Enter your question:")
 st.write("")  # Adding some space between input and buttons
