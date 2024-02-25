@@ -1,52 +1,28 @@
 import streamlit as st
-import openai
-from gtts import gTTS
-from io import BytesIO
+from openai import OpenAI
 
-def generate(prompt):
-    openai.api_key = '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'
+st.title("ChatGPT-like clone")
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
+# Set OpenAI API key from Streamlit secrets
+client = OpenAI(api_key=st.secrets["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"])
 
-    result = response.choices[0].message['content']
-    
-    # Create a BytesIO object to store the audio data
-    sound_file = BytesIO()
-    
-    # Generate speech using gTTS and write it to the BytesIO object
-    tts = gTTS(text=result, lang='en')
-    tts.write_to_fp(sound_file)
-    
-    # Reset the BytesIO object to the beginning
-    sound_file.seek(0)
-    
-    # Display the audio using st.audio
-    st.audio(sound_file, format='audio/mp3')  # Specify the format as mp3
-    
-    return result
+# Set a default model
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-3.5-turbo"
 
-def clear():
-    st.empty()
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
-st.title("ChatBot")
+# Display chat messages from history on app rerun
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-st.markdown("![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)")
-
-prompt = st.text_input("Enter your question:")
-st.write("")  # Adding some space between input and buttons
-
-# Centering the buttons along the x-axis
-col1, col2, col3 = st.columns([4, 4, 1])
-with col2:
-    if st.button("Generate"):
-        result = generate(prompt)
-        st.write(result)
-
-with col2:
-    if st.button("Clear"):
-        clear()
+# Accept user input
+if prompt := st.chat_input("What is up?"):
+    # Add user message to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    # Display user message in chat message container
+    with st.chat_message("user"):
+        st.markdown(prompt)
