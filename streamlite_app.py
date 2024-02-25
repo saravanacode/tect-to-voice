@@ -4,7 +4,7 @@ from gtts import gTTS
 import os
 
 def generate(prompt):
-    openai.api_key = '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'
+    openai.api_key = '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'
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
