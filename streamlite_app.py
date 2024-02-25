@@ -46,7 +46,7 @@ if prompt := st.chat_input("How could I help you?"):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": "restrcit your response within more then 20 lines but it should be a exact answer this is my question :"+ " " + prompt})
     # Display user message in chat message container
-    with st.chat_message("user"):
+        
 
     with st.chat_message("assistant"):
         response = st.write_stream(ollama_generator(
