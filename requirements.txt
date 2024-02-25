@@ -1,4 +1,4 @@
 openai
-olama
+ollama
 pyttsx3
 gTTs
