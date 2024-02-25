@@ -23,7 +23,8 @@ def clear():
     st.empty()
 
 st.title("ChatBot")
-face_img = st.image("women_wonder.gif", use_column_width=True)
+st.markdown('<img src=""women_wonder.gif"', unsafe_allow_html=True)
+#face_img = st.image("women_wonder.gif", use_column_width=True)
 
 prompt = st.text_input("Enter your question:")
 st.write("")  # Adding some space between input and buttons
