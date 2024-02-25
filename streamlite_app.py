@@ -55,8 +55,10 @@ if prompt := st.chat_input("How could I help you?"):
         tts.write_to_fp(sound_file)
         tts.save('sample.wav')
 
-
+        gif = st.markdown("![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)")
         autoplay_audio('sample.wav')
+        gif.empty()
+        
         # st.audio(sound_file,autoplay=True)
     st.session_state.messages.append(
         {"role": "assistant", "content": response})
