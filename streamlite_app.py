@@ -23,7 +23,8 @@ def clear():
     st.empty()
 
 st.title("ChatBot")
-st.markdown('<img src=""women_wonder.gif"', unsafe_allow_html=True)
+st.markdown("![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)")
+#st.markdown('<img src=""women_wonder.gif"', unsafe_allow_html=True)
 #face_img = st.image("women_wonder.gif", use_column_width=True)
 
 prompt = st.text_input("Enter your question:")
