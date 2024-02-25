@@ -1,10 +1,10 @@
 import streamlit as st
 import openai
 from gtts import gTTS
-import os
+from io import BytesIO
 
 def generate(prompt):
-    openai.api_key = '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'
+    openai.api_key = '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'
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -14,18 +14,28 @@ def generate(prompt):
     )
 
     result = response.choices[0].message['content']
+    
+    # Create a BytesIO object to store the audio data
+    sound_file = BytesIO()
+    
+    # Generate speech using gTTS and write it to the BytesIO object
     tts = gTTS(text=result, lang='en')
-    tts.save("output.mp3")
-    os.system("start output.mp3")  # This will play the audio file
+    tts.write_to_fp(sound_file)
+    
+    # Reset the BytesIO object to the beginning
+    sound_file.seek(0)
+    
+    # Display the audio using st.audio
+    st.audio(sound_file, format='audio/mp3')  # Specify the format as mp3
+    
     return result
 
 def clear():
     st.empty()
 
 st.title("ChatBot")
+
 st.markdown("![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)")
-#st.markdown('<img src=""women_wonder.gif"', unsafe_allow_html=True)
-#face_img = st.image("women_wonder.gif", use_column_width=True)
 
 prompt = st.text_input("Enter your question:")
 st.write("")  # Adding some space between input and buttons
