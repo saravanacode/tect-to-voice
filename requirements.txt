@@ -1,3 +1,4 @@
 openai
+olama
 pyttsx3
 gTTs
